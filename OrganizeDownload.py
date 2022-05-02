@@ -3,6 +3,7 @@
 import os
 from time import time
 from math import floor
+from pathlib import Path
 
 
 # Returns the current timestamp
@@ -11,7 +12,8 @@ def timestamp():
 
 
 def moveFile(path, folderName, file):
-    if file == __file__:
+    filename = Path(file).name
+    if filename == __file__:
         pass
 
     dst = os.path.join(path, folderName)
