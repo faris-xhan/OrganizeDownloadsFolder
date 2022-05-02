@@ -31,12 +31,12 @@ if not os.path.exists(Downloads):
 # Change Directory to Downloads
 os.chdir(Downloads)
 
+document = ('doc', 'xls', 'pdf', 'docx', 'txt')
 pictures = ('jpeg', 'jpg', 'png', 'gif')
 vidoes = ('mkv', 'avi', 'mp4', 'ts')
 compressed = ('zip', 'rar', '7z')
-music = ('mp3', 'wav')
-document = ('doc', 'xls', 'pdf', 'docx', 'txt')
 programs = ('exe', 'bat', 'msi')
+music = ('mp3', 'wav')
 
 for file in os.listdir():
     if os.path.isfile(file):
