@@ -1,6 +1,13 @@
 #! python
 # OrganizeDownload - Organize your download folder
 import os
+from time import time
+from math import floor
+
+
+# Returns the current timestamp
+def timestamp():
+    return floor(time())
 
 
 def moveFile(path, folderName, file):
@@ -12,7 +19,7 @@ def moveFile(path, folderName, file):
     except FileExistsError:
         fileName = os.path.basename(file)
         name, ext = os.path.splitext(fileName)
-        name += 'New'
+        name += ' - ' + str(timestamp())
         fileName = name + ext
         dst = os.path.join(dst, fileName)
         os.rename(file, dst)
