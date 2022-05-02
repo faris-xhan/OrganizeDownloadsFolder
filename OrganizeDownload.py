@@ -11,6 +11,9 @@ def timestamp():
 
 
 def moveFile(path, folderName, file):
+    if file == __file__:
+        pass
+
     dst = os.path.join(path, folderName)
     if not(os.path.exists(dst)):
         os.mkdir(dst)
