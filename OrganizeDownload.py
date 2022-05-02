@@ -33,7 +33,7 @@ os.chdir(Downloads)
 
 document = ('doc', 'xls', 'pdf', 'docx', 'txt')
 pictures = ('jpeg', 'jpg', 'png', 'gif')
-vidoes = ('mkv', 'avi', 'mp4', 'ts')
+videos = ('mkv', 'avi', 'mp4', 'ts')
 compressed = ('zip', 'rar', '7z')
 programs = ('exe', 'bat', 'msi')
 music = ('mp3', 'wav')
@@ -48,7 +48,7 @@ for file in os.listdir():
         elif file.endswith(compressed):
             moveFile(path, 'Compressed', file)
 
-        elif file.endswith(vidoes):
+        elif file.endswith(videos):
             moveFile(path, 'Vidoes', file)
 
         elif file.endswith(music):
