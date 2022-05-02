@@ -20,7 +20,7 @@ def moveFile(path, folderName, file):
     print(f'{file} --> {dst}')
 
 
-Home = os.environ.get('HOMEPATH')
+Home = os.getenv('USERPROFILE') or os.getenv('HOME')
 Downloads = os.path.join(Home, 'Downloads')
 
 
