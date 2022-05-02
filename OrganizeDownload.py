@@ -1,51 +1,26 @@
 #! python
 # OrganizeDownload - Organize your download folder
+
 import os
 from time import time
 from math import floor
 from pathlib import Path
 
-
 SCRIPT_NAME = Path(__file__).name
 
+# Directories
+HOME_DIR = os.getenv('USERPROFILE') or os.getenv('HOME')
+DOWNLOADS_DIR = Path(os.path.join(HOME_DIR, 'Downloads'))
 
-def timestamp():
-    # Returns the current timestamp
-    return floor(time())
+COMPRESSED_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Compressed'))
+DOCUMENTS_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Documents'))
+PROGRAMS_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Programs'))
+PICTURES_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Pictures'))
+OTHERS_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Others'))
+VIDEOS_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Videos'))
+MUSIC_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Music'))
 
-
-def moveFile(path, folderName, file):
-    filename = Path(file).name
-    if filename == SCRIPT_NAME:
-        pass
-
-    dst = os.path.join(path, folderName)
-    if not(os.path.exists(dst)):
-        os.mkdir(dst)
-    try:
-        os.rename(file, dst)
-    except FileExistsError:
-        fileName = os.path.basename(file)
-        name, ext = os.path.splitext(fileName)
-        name += ' - ' + str(timestamp())
-        fileName = name + ext
-        dst = os.path.join(dst, fileName)
-        os.rename(file, dst)
-
-    print(f'{file} --> {dst}')
-
-
-Home = os.getenv('USERPROFILE') or os.getenv('HOME')
-Downloads = os.path.join(Home, 'Downloads')
-
-
-if not os.path.exists(Downloads):
-    print('Sorry! for some reason script could not find your Download folder')
-    exit(127)
-
-# Change Directory to Downloads
-os.chdir(Downloads)
-
+# Files Extensions
 document = ('doc', 'xls', 'pdf', 'docx', 'txt')
 pictures = ('jpeg', 'jpg', 'png', 'gif')
 videos = ('mkv', 'avi', 'mp4', 'ts')
@@ -53,27 +28,63 @@ compressed = ('zip', 'rar', '7z')
 programs = ('exe', 'bat', 'msi')
 music = ('mp3', 'wav')
 
+
+def timestamp():
+    # Returns the current timestamp
+    return floor(time())
+
+
+def moveFile(file, destination_dir):
+    filename = Path(file).name
+    destination = Path(destination_dir, filename)
+    if filename == SCRIPT_NAME:
+        return
+
+    if not(os.path.exists(destination_dir)):
+        os.mkdir(destination_dir)
+
+    try:
+        os.rename(file, destination)
+
+    except FileExistsError:
+        new_filename = file.stem + ' - ' + str(timestamp())
+        destination = os.path.join(destination_dir, new_filename)
+
+        os.rename(file, destination_dir)
+
+    print(f'{file.name} --> {destination_dir.name}')
+
+
+if not DOWNLOADS_DIR.exists():
+    print('Sorry! for some reason script could not find your Download folder')
+    exit(127)
+
+# Change Directory to Downloads
+os.chdir(DOWNLOADS_DIR)
+
+
 for file in os.listdir():
-    if os.path.isfile(file):
-        file = os.path.realpath(file)
-        path, fileName = os.path.split(file)
-        if file.endswith(pictures):
-            moveFile(path, 'Pictures', file)
+    file = Path(file)
 
-        elif file.endswith(compressed):
-            moveFile(path, 'Compressed', file)
+    if file.exists() and file.is_file():
+        filename = file.name
+        if filename.endswith(pictures):
+            moveFile(file, PICTURES_DIR)
 
-        elif file.endswith(videos):
-            moveFile(path, 'Videos', file)
+        elif filename.endswith(compressed):
+            moveFile(file, COMPRESSED_DIR)
 
-        elif file.endswith(music):
-            moveFile(path, 'Music', file)
+        elif filename.endswith(videos):
+            moveFile(file, VIDEOS_DIR)
 
-        elif file.endswith(document):
-            moveFile(path, 'Documents', file)
+        elif filename.endswith(music):
+            moveFile(file, MUSIC_DIR)
 
-        elif file.endswith(programs):
-            moveFile(path, 'Programs', file)
+        elif filename.endswith(document):
+            moveFile(file, DOCUMENTS_DIR)
+
+        elif filename.endswith(programs):
+            moveFile(file, PROGRAMS_DIR)
 
         else:
-            moveFile(path, 'Others', file)
+            moveFile(file,  OTHERS_DIR)
