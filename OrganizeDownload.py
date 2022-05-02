@@ -49,7 +49,7 @@ for file in os.listdir():
             moveFile(path, 'Compressed', file)
 
         elif file.endswith(videos):
-            moveFile(path, 'Vidoes', file)
+            moveFile(path, 'Videos', file)
 
         elif file.endswith(music):
             moveFile(path, 'Music', file)
