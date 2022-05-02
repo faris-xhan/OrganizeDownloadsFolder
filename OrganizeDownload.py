@@ -6,14 +6,17 @@ from math import floor
 from pathlib import Path
 
 
-# Returns the current timestamp
+SCRIPT_NAME = Path(__file__).name
+
+
 def timestamp():
+    # Returns the current timestamp
     return floor(time())
 
 
 def moveFile(path, folderName, file):
     filename = Path(file).name
-    if filename == __file__:
+    if filename == SCRIPT_NAME:
         pass
 
     dst = os.path.join(path, folderName)
