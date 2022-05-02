@@ -28,6 +28,7 @@ if not os.path.exists(Downloads):
     print('Sorry! for some reason script could not find your Download folder')
     exit(127)
 
+# Change Directory to Downloads
 os.chdir(Downloads)
 
 pictures = ('jpeg', 'jpg', 'png', 'gif')
