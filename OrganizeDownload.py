@@ -17,7 +17,7 @@ DOCUMENTS_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Documents'))
 PROGRAMS_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Programs'))
 PICTURES_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Pictures'))
 OTHERS_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Others'))
-VIDEOS_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Videos'))
+VIDEOS_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Video'))
 MUSIC_DIR = Path(os.path.join(DOWNLOADS_DIR, 'Music'))
 
 # Files Extensions
@@ -40,7 +40,7 @@ def moveFile(file, destination_dir):
     if filename == SCRIPT_NAME:
         return
 
-    if not(os.path.exists(destination_dir)):
+    if not (os.path.exists(destination_dir)):
         os.mkdir(destination_dir)
 
     try:
@@ -51,6 +51,9 @@ def moveFile(file, destination_dir):
         destination = os.path.join(destination_dir, new_filename)
 
         os.rename(file, destination_dir)
+
+    except Exception as e:
+        print(e)
 
     print(f'{file.name} --> {destination_dir.name}')
 
